@@ -1,0 +1,22 @@
+#:kivy 2.1.0
+
+<ThumbIconButton@FileIconButton>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Image:
+        id: thumb
+        size_hint: None, None
+        size: dp(100), dp(100)
+        allow_stretch: True
+        keep_ratio: True
+        source: root.thumbnail if hasattr(root, "thumbnail") else ""
+        pos: root.pos
+
+<ThumbView@FileChooserIconView>:
+    viewclass: 'ThumbIconButton'
+    on_entry_added:
+        root.load_thumbnail(args[1])
