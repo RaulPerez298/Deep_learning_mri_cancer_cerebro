@@ -1,12 +1,10 @@
 # Deep_learning_mri_cancer_cerebro
 
+## Instalación del proyecto.
 
+### Instalación de CUDA.
 
-[Instalador de Cuda](instal_cuda.sh)
-
-
-
-
+El proyecto trata de la implementación de redes neuronales para la detección de cancer en el cerebro utilizando **MRI** la información de las especificaciones del proyecto y como fue entrenado se encuentran en [Deep_proyecto.pdf](Deep_proyecto.pdf), para poder hacer el entrenamiento de la red neuronal se recomienda usar una gpu RTX,  el archivo [instal_cuda.sh](instal_cuda.sh) contiene las instrucciones necesarias para utilizar dicha GPU en UBUNTU 2404. Donde los comandos a usar en termina son los siguientes:
 
 ```
 sudo apt install git
@@ -15,24 +13,35 @@ cd Deep_learning_mri_cancer_cerebro
 bash ./instal_cuda.sh
 ```
 
+### Instalación de python.
 
+Se deberá utilizar Conda para poder utilizar Python 3.10, donde la instalación esta definida en las siguientes instrucciones:
 
+```
+wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh
+bash ./Anaconda3-2024.10-1-Linux-x86_64.sh 
+```
 
+Para utilizar python 3.10 se utiliza la siguiente instrucción para instalar todas las dependencias necesarias:
 
 ```
 bash ./datos_crear_python.sh
 ```
 
-
+Al ejecutar el comando anterior se crea un nuevo entorno virtual el cual se tiene que activar usando el siguiente comando:
 
 ```
 conda activate tfcpu
 ```
 
+## Desarrollo de datos.
+
+
+
 
 
 ```text
-project/
+Deep_learning_mri_cancer_cerebro/
 ├── data set/
 │   ├── no/
 │   └── yes
@@ -95,4 +104,8 @@ spyder red_validacion_impro.py
 ```
 
 
+
+```
+python kivy_proyecto.py
+```
 
