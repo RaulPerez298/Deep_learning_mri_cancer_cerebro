@@ -13,7 +13,7 @@ cd Deep_learning_mri_cancer_cerebro
 bash ./instal_cuda.sh
 ```
 
-### Instalación de python.
+### Instalación de Python.
 
 Se deberá utilizar Conda para poder utilizar Python 3.10, donde la instalación esta definida en las siguientes instrucciones:
 
@@ -34,11 +34,9 @@ Al ejecutar el comando anterior se crea un nuevo entorno virtual el cual se tien
 conda activate tfcpu
 ```
 
-## Desarrollo de datos.
+## Procesamiento de imágenes. 
 
-
-
-
+La red neuronal fue entrada para 2 clases, si tiene o no la enfermedad, donde cada clase contiene 3418 imágenes en *Data set* y *test* contiene 180 imágenes por clase para testear el modelo (estas imágenes nunca son usadas para entrenar ni para validar los datos usando *"val_accuracy"* ). Si deseas agregar más imágenes para entrenar y testear deberás colocarlas en las direcciones siguientes (esto se debe que las imágenes se tienen que procesar para los modelos que usan el método **gamma**):
 
 ```text
 Deep_learning_mri_cancer_cerebro/
@@ -52,18 +50,80 @@ Deep_learning_mri_cancer_cerebro/
 
 
 
+[agc_function.py](agc_function.py)
+
+
+
 ```
 python newdatasetGamma.py
 ```
 
 
 
-[agc_function.py](agc_function.py)
+
+
+
+
+```text
+Deep_learning_mri_cancer_cerebro/
+└── data_mejora/
+   ├── no/
+   └── yes
+```
+
+
+
+
 
 
 
 ```
 spyder datos_division_C_V_este_si_cx.py
+```
+
+
+
+
+
+```text
+Deep_learning_mri_cancer_cerebro/
+└── data_c_v/
+   ├── interaccion1/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion2/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion3/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion4/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   └── interaccion5/
+   		├──test/
+   		│	├──no/
+   		│	└──yes/
+   		└──train/
+   			├──no/
+   			└──yes/
+
 ```
 
 
@@ -76,7 +136,56 @@ spyder datos_division_C_V_este_si_para_lamejora_imagen.py
 
 
 
-En [red_c_v_todas.py](red_c_v_todas.py) se debera de modificar la variable "*red_a_entrenar*", la cual puede tomar valores de 0 hasta 3 dependiendo del modelo que se desea entrenar, donde la lista de los modelos esta definidos como *['inception_resnet_v2','resnet50','nuestro_v8','resnet50_elu']* .
+
+
+```text
+Deep_learning_mri_cancer_cerebro/mejora_imagen/
+└── data_c_v/
+   ├── interaccion1/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion2/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion3/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   ├── interaccion4/
+   │	├──test/
+   │	│	├──no/
+   │	│	└──yes/
+   │	└──train/
+   │		├──no/
+   │		└──yes/
+   └── interaccion5/
+   		├──test/
+   		│	├──no/
+   		│	└──yes/
+   		└──train/
+   			├──no/
+   			└──yes/
+
+```
+
+
+
+
+
+
+
+En [red_c_v_todas.py](red_c_v_todas.py) se deberá de modificar la variable "*red_a_entrenar*", la cual puede tomar valores de 0 hasta 3 dependiendo del modelo que se desea entrenar, donde la lista de los modelos esta definidos como *['inception_resnet_v2','resnet50','nuestro_v8','resnet50_elu']* .
 
 
 
