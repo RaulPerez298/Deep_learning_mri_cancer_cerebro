@@ -69,7 +69,7 @@ except:
     matriz_evaluate_test=np.zeros((numeros_grupos,2))
 
 os.makedirs("./c_v_pesos_"+name_r+"/", exist_ok=True)  
-for grupo in range(0,1):#numeros_grupos):
+for grupo in range(numeros_grupos):
 
     print('entrenando modelo '+name_r)
     interacion=grupo+1
