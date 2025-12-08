@@ -96,4 +96,4 @@ if __name__ == "__main__":
     with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
         pool.map(no, range(len(files_no)))
 
-    print("✅ Procesamiento completado.")
+    print("Procesamiento completado.")
