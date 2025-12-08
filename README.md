@@ -50,40 +50,37 @@ Deep_learning_mri_cancer_cerebro/
 
 
 
-[agc_function.py](agc_function.py)
-
-
+Se deberá de crear un nuevo dataset con el ya existente, esto se debe a que se tiene que aplicar una mejora de imágenes usando la funcion *prom* del archivo [agc_function.py](agc_function.py), donde se aplica el método gamma propuesto, donde el código siguiente es el utilizado para crear el nuevo data set:
 
 ```
 python newdatasetGamma.py
 ```
 
-
-
-
+Al ser ejecutado dicho comando ahora tendremos estos directorios, donde se encuentran las imágenes ya procesadas usando el método propuesto basado en gamma. 
 
 
 
 ```text
 Deep_learning_mri_cancer_cerebro/
 └── data_mejora/
+│  ├── no/
+│  └── yes
+└── mejora_imagen/test/
    ├── no/
    └── yes
 ```
 
 
 
+### Utilización de validación cruzada.
 
-
-
+Este metodo es utilizado como tal para evaluar el modelo para hacer una tarea especifica, para ello el data set se divide en 5, donde por cada interacción el subdata set seleccionado sera usado para calcular *"val_accuracy"*, y los 4 restantes para hacer el entrenamiento del modelo, teniendo un total de 5 pesos sinapticos, para crear el data set es con la siguiente instrucción (se deberá de darle run con el software de spyder *F5*):
 
 ```
 spyder datos_division_C_V_este_si_cx.py
 ```
 
-
-
-
+Donde ahora los datos nuevos son los siguientes:
 
 ```text
 Deep_learning_mri_cancer_cerebro/
@@ -128,15 +125,13 @@ Deep_learning_mri_cancer_cerebro/
 
 
 
-
+Ahora se deberá aplicar la creación de los nuevos datos de validación cruzada, pero para las imágenes con un pre-procesamiento (se deberá de darle run con el software de spyder *F5*): 
 
 ```
 spyder datos_division_C_V_este_si_para_lamejora_imagen.py
 ```
 
-
-
-
+Siendo ahora este árbol de direcciones creados:
 
 ```text
 Deep_learning_mri_cancer_cerebro/mejora_imagen/
@@ -181,25 +176,25 @@ Deep_learning_mri_cancer_cerebro/mejora_imagen/
 
 
 
+## Entrenamiento de las redes neuronales.
 
 
 
-
-En [red_c_v_todas.py](red_c_v_todas.py) se deberá de modificar la variable "*red_a_entrenar*", la cual puede tomar valores de 0 hasta 3 dependiendo del modelo que se desea entrenar, donde la lista de los modelos esta definidos como *['inception_resnet_v2','resnet50','nuestro_v8','resnet50_elu']* .
-
-
+En [red_c_v_todas.py](red_c_v_todas.py) se deberá de modificar la variable "*red_a_entrenar*", la cual puede tomar valores de 0 hasta 3 dependiendo del modelo que se desea entrenar, donde la lista de los modelos esta definidos como *['inception_resnet_v2','resnet50','nuestro_v8','resnet50_elu']* . Donde se entrenara 5 veces el modelo seleccionado, para entrenarlo con los datos sin procesar es con el siguiente comando:
 
 ```
 python red_c_v_todas.py
 ```
 
-
+Para entrenar los modelos con los datos ya procesados es con el siguiente comando:
 
 ```
 python red_c_v_todas_gamma.py
 ```
 
 
+
+(se deberá de darle run con el software de spyder *F5*):
 
 ```
 spyder red_validacion_impro.py
