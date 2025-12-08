@@ -31,7 +31,15 @@ conda activate tfcpu
 
 
 
-
+```text
+project/
+├── data set/
+│   ├── no/
+│   └── yes
+└── test/
+    ├── no/
+    └── yes/
+```
 
 
 

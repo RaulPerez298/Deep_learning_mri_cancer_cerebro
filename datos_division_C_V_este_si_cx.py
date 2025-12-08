@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  9 22:23:23 2022
-
-@author: ral298
-"""
 
 from skimage import io,color
 import numpy as np

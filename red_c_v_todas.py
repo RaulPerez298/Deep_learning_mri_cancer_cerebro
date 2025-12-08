@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
 
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Dec  1 10:08:25 2021
-
-@author: ral298
-"""
 # from numba import cuda
 # device = cuda.get_current_device()
 # device.reset()
