@@ -22,6 +22,10 @@ import tensorflow as tf
 # print("Dispositivo a usarse",tf.config.list_physical_devices())  # fuerza la inicialización
 
 
+from agc_function import prom
+import cv2
+import tempfile
+
 class ImageApp(App):
     def build(self):
         self.selected_image = None
@@ -48,18 +52,57 @@ class ImageApp(App):
         button_layout.add_widget(apply_btn)
         main_layout.add_widget(button_layout)
 
-        # Área de imágenes
-        img_layout = BoxLayout(orientation='horizontal', spacing=10)
+        # # Área de imágenes
+        # img_layout = BoxLayout(orientation='horizontal', spacing=10)
+        # self.img1 = Image()
+        # self.img2 = Image()
+        # img_layout.add_widget(self.img1)
+        # img_layout.add_widget(self.img2)
+        # main_layout.add_widget(img_layout)
+
+        # # Texto de resultado
+        # self.result_label = Label(text='', size_hint=(1, None), height=40)
+        # main_layout.add_widget(self.result_label)
+        
+        # Layout principal de imágenes (izquierda | derecha)
+        img_layout = BoxLayout(orientation='horizontal', spacing=20)
+        
+        # ===== COLUMNA IZQUIERDA =====
+        left_box = BoxLayout(orientation='vertical', spacing=10)
         self.img1 = Image()
+        self.result_label_left = Label(
+            text='',
+            size_hint=(1, None),
+            height=120,
+            halign='left',
+            valign='top'
+        )
+        self.result_label_left.bind(size=self.result_label_left.setter('text_size'))
+        
+        left_box.add_widget(self.img1)
+        left_box.add_widget(self.result_label_left)
+        
+        # ===== COLUMNA DERECHA =====
+        right_box = BoxLayout(orientation='vertical', spacing=10)
         self.img2 = Image()
-        img_layout.add_widget(self.img1)
-        img_layout.add_widget(self.img2)
+        self.result_label_right = Label(
+            text='',
+            size_hint=(1, None),
+            height=120,
+            halign='left',
+            valign='top'
+        )
+        self.result_label_right.bind(size=self.result_label_right.setter('text_size'))
+        
+        right_box.add_widget(self.img2)
+        right_box.add_widget(self.result_label_right)
+        
+        # Agregar columnas
+        img_layout.add_widget(left_box)
+        img_layout.add_widget(right_box)
+        
         main_layout.add_widget(img_layout)
-
-        # Texto de resultado
-        self.result_label = Label(text='', size_hint=(1, None), height=40)
-        main_layout.add_widget(self.result_label)
-
+        
         return main_layout
 
     def open_file_chooser(self, instance):
@@ -116,13 +159,16 @@ class ImageApp(App):
             self.selected_image = selection[0]
             self.img1.source = self.selected_image
             self.img1.reload()
-            self.result_label.text = "Imagen cargada correctamente."
+            # self.result_label.text = "Imagen cargada correctamente."
+            self.result_label_left.text = "Imagen original cargada correctamente."
+            self.result_label_right.text=""
         popup.dismiss()
 
     def apply_model(self, instance):
         """Carga el modelo seleccionado, aplica la inferencia y muestra el resultado."""
         if not self.selected_image:
-            self.result_label.text = "Primero selecciona una imagen."
+            self.result_label_left.text = "Primero selecciona una imagen."
+            self.result_label_right.text=""
             return
         with device('/CPU:0'):
             resultado=""
@@ -156,12 +202,14 @@ class ImageApp(App):
                 model=Model(inputs=input_im, outputs=x, name=name_r)
                 # model.load_weights(os.path.join(self.current_dir, './c_v_pesos_resnet50/val_accuracy_resnet50_best_cnn1.weights.h5'))
             else:
-                self.result_label.text = "Selecciona un modelo válido."
+                self.result_label_left.text = "Selecciona un modelo válido."
+                self.result_label_right.text=""
                 return
             target_size = (altura, longitud)
       		# Cargar y preprocesar imagen
             img = keras_image.load_img(self.selected_image, target_size=target_size)
             img_array = keras_image.img_to_array(img)
+            img_uint8 = img_array.astype(np.uint8)
             img_array = np.expand_dims(img_array, axis=0) / 255.0
             for index_model in range(5):
                 if selected_model == 'ResNet50 Modificado':
@@ -178,10 +226,48 @@ class ImageApp(App):
                 clase = np.argmax(pred[0])
                 resultado += "Tiene enfermedad para modelo "+str(1+index_model)+"\n" if clase == 1 else "No tiene enfermedad para modelo "+str(1+index_model)+"\n"
 
-        # Mostrar imagen procesada (mismo archivo por ahora)
-        self.img2.source = self.selected_image
-        self.img2.reload()
-        self.result_label.text = f"Imagen cargada — Resultado: \n{resultado}"
+            # Mostrar imagen procesada (mismo archivo por ahora)
+            
+            processed = prom(img_uint8[:,:,0])
+            
+            # Convertir a RGB
+            processed_rgb = np.stack([processed]*3, axis=-1)
+            
+            
+            
+            # Guardar imagen temporal
+            temp_path = os.path.join(tempfile.gettempdir(), "processed.png")
+            cv2.imwrite(temp_path, processed_rgb)
+            self.img2.source = temp_path#self.selected_image
+            self.img2.reload()
+            # self.result_label.text = f"Imagen cargada — Resultado: \n{resultado}"
+            self.result_label_left.text = (
+                "Imagen ORIGINAL\n"
+                f"{resultado}"
+            )
+
+            processed_rgb = processed_rgb.astype(np.float32) / 255.0
+            
+            processed_input = np.expand_dims(processed_rgb, axis=0)
+            resultado_data2=""
+            for index_model in range(5):
+                if selected_model == 'ResNet50 Modificado':
+                    
+                    model.load_weights(os.path.join(self.current_dir, './mejora_imagen/c_v_pesos_resnet50_elu/val_accuracy_resnet50_elu_best_cnn'+str(1+index_model)+'.weights.h5'))
+                elif selected_model == 'Modelo v8':
+                    model.load_weights(os.path.join(self.current_dir, './mejora_imagen/c_v_pesos_nuestro_v8/val_accuracy_nuestro_v8_best_cnn'+str(1+index_model)+'.weights.h5'))  		    
+                elif selected_model == 'Inception resnet v2':
+                    model.load_weights(os.path.join(self.current_dir, './mejora_imagen/c_v_pesos_inception_resnet_v2/val_accuracy_inception_resnet_v2_best_cnn'+str(1+index_model)+'.weights.h5'))
+                elif selected_model == 'Resnet 50':
+                    model.load_weights(os.path.join(self.current_dir, './mejora_imagen/c_v_pesos_resnet50/val_accuracy_resnet50_best_cnn'+str(1+index_model)+'.weights.h5'))
+          		# Inferencia
+                pred = model.predict(processed_input)
+                clase = np.argmax(pred[0])
+                resultado_data2 += "Tiene enfermedad para modelo "+str(1+index_model)+"\n" if clase == 1 else "No tiene enfermedad para modelo "+str(1+index_model)+"\n"
+            self.result_label_right.text = (
+                "Imagen PROCESADA (AGC)\n"
+                f"{resultado_data2}"
+            )
 
 class FileChooserPopup(BoxLayout):
     pass

@@ -186,11 +186,13 @@ En [red_c_v_todas.py](red_c_v_todas.py) se deberá de modificar la variable "*re
 python red_c_v_todas.py
 ```
 
-Para entrenar los modelos con los datos ya procesados es con el siguiente comando:
+Para entrenar los modelos con los datos ya procesados es con el siguiente comando (al igual se deberá de escoger que modelo se va a entrenar usando al variable *"red_a_entrenar"* ):
 
 ```
 python red_c_v_todas_gamma.py
 ```
+
+### Validación de los modelos.
 
 
 
@@ -207,7 +209,7 @@ cd mejora_imagen/
 spyder red_validacion_impro.py
 ```
 
-
+### Interfaz grafica.
 
 ```
 python kivy_proyecto.py
