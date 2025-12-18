@@ -192,26 +192,68 @@ Para entrenar los modelos con los datos ya procesados es con el siguiente comand
 python red_c_v_todas_gamma.py
 ```
 
+### Interfaz grafica.
+
+Se creo una interfaz grafica la cual se puede ejecutar con el siguiente comando:
+
+```
+python kivy_proyecto.py
+```
+
+Donde dicha interfaz puedes seleccionar el modelo a utilizar para calcular si se tiene alguna enfermedad o no. En la carpeta *Testing* se tienen imágenes en la que el usuario puede usar para probar la aplicación gráfica, igual se pueden probar imágenes propias del usuario en caso contar con algunas. 
+
+
+
 ### Validación de los modelos.
 
-
-
-(se deberá de darle run con el software de spyder *F5*):
+Para validar si los modelos son aceptables con su entrenamiento se validaron los modelo con la validación cruzada, donde se uso el promedio de los 5 pesos sinapticos de cada modelo donde se tienen tienen que calcular con el siguiente comando (se deberá de darle run con el software de spyder *F5*):
 
 ```
 spyder red_validacion_impro.py
 ```
 
+Donde las imagenes siguientes son el promedio de esos 
 
+![fina_inception](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/Figuras/inception_resnet_v2/Figure_grupo_final.jpg)
+
+
+
+![fina_nuestro_v8](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/Figuras/nuestro_v8/Figure_grupo_final.jpg)
+
+
+
+![fina_resnet50](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/Figuras/resnet50/Figure_grupo_final.jpg)
+
+
+
+![fina_resnet50_elu](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/Figuras/resnet50_elu/Figure_grupo_final.jpg)
+
+
+
+Para validar si los modelos son aceptables con su entrenamiento se validaron los modelo con la validación cruzada, donde estos modelos a diferencia de los anteriores son los que se entrenaron con las imágenes con pre-procesamiento, donde se uso el promedio de los 5 pesos sinapticos de cada modelo donde se tienen tienen que calcular con el siguiente comando (se deberá de darle run con el software de spyder *F5*):
 
 ```
 cd mejora_imagen/
 spyder red_validacion_impro.py
 ```
 
-### Interfaz grafica.
+### 
 
-```
-python kivy_proyecto.py
-```
+![pre_inception](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/mejora_imagen/Figuras/inception_resnet_v2/Figure_grupo_final.jpg)
+
+
+
+![pre_nuestro](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/mejora_imagen/Figuras/nuestro_v8/Figure_grupo_final.jpg)
+
+
+
+![pre_resnet](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/mejora_imagen/Figuras/resnet50/Figure_grupo_final.jpg)
+
+
+
+![pre_resnet_elu](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/mejora_imagen/Figuras/resnet50_elu/Figure_grupo_final.jpg)
+
+
+
+
 
