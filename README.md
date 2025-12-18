@@ -212,7 +212,7 @@ Para validar si los modelos son aceptables con su entrenamiento se validaron los
 spyder red_validacion_impro.py
 ```
 
-Donde las imagenes siguientes son el promedio de esos 
+Donde las imágenes siguientes son el promedio de los 5 pesos sinapticos para cada modelo:
 
 ![fina_inception](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/Figuras/inception_resnet_v2/Figure_grupo_final.jpg)
 
@@ -238,6 +238,10 @@ spyder red_validacion_impro.py
 ```
 
 ### 
+
+Donde las imágenes siguientes son el promedio de los 5 pesos sinapticos para cada modelo que utilizan pre-procesamiento en las imágenes:
+
+
 
 ![pre_inception](https://github.com/RaulPerez298/Deep_learning_mri_cancer_cerebro/blob/main/mejora_imagen/Figuras/inception_resnet_v2/Figure_grupo_final.jpg)
 
